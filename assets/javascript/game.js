@@ -28,16 +28,16 @@ console.log(x); //for me
 wordHolder =[]; //reset word from previous game
 currentWord = (wordbank[x]).toUpperCase(); //capitilize all characters string
 currentWord = currentWord.split("");  //break string into array
-console.log(currentWord); //for me
+console.log(currentWord); // users can check the answer in console log.
 pastGuesses = []; //reset previous guess
 for(var i = 0; i < currentWord.length; i++) { //creates and word place holder to show progress when compared to currentWord variable
     wordHolder.push("_");
     };
                                                       
-  	 document.getElementById("word").innerHTML = makeString(wordHolder," "); //updates HTML 
-  	 document.getElementById("guessNum").innerHTML = guessNum;
-  	 document.getElementById("guessed").innerHTML = pastGuesses;
-  	 document.getElementById("banner").innerHTML = "Game Started!"
+  	 document.getElementById("word").innerHTML = makeString(wordHolder," "); //updates HTML with space to function makestring
+  	 document.getElementById("guessNum").innerHTML = guessNum; //updates HTML
+  	 document.getElementById("guessed").innerHTML = pastGuesses; //updates HTML
+  	 document.getElementById("banner").innerHTML = "~~~~~~Game Started!~~~~~~"; //updates HTML
 }
 
 
@@ -46,23 +46,24 @@ function userGuess(guess){
 	pastGuesses.push(guess); //appends to user guess list
 	guessNum--; //reduce game attempts
 	document.getElementById("guessed").innerHTML = pastGuesses;//updates HTML 
-	document.getElementById("guessNum").innerHTML = guessNum;
-	document.getElementById("banner").innerHTML = "Keep guessing you have "+guessNum+" chances left."
-	checkWord(guess);// passes valid caharacter into checkWord function 
+	document.getElementById("guessNum").innerHTML = guessNum; //updates HTML 
+	document.getElementById("banner").innerHTML = "Keep guessing you have "+guessNum+" chances left." //updates HTML 
+	checkWord(guess);// passes valid checks and passes variable into checkWord function 
 	}
 	else{
-	document.getElementById("banner").innerHTML = "Your guess "+guess+" did not count. Keep guessing you have "+guessNum+" chances left."//updates HTML 
+	document.getElementById("banner").innerHTML = "Your guess "+guess+" did not count. Keep guessing you have "+guessNum+" chances left."//updates HTML  -- warns users that the current key press did not count
 	}
                 
 }  
  
-function checkWord(guess){ 
-    currentWord.forEach(function(value,index) { //similar to for loop and if finds a character that matches in current word it wordHolder to show progression
+function checkWord(guess){ //checks the status of the game with the amount of guesses left.
+    currentWord.forEach(function(value,x) { //similar to for loop and if finds a character that matches in current word it wordHolder to show progression
     if(value == guess) {
-    wordHolder[index] = guess; //updates place holder variable with correct guess
+    wordHolder[x] = guess; //updates place holder variable with correct guess
     }
     })
-    if(guessNum <= 0 ){ //if character does not exist in currentWord and guessNum is 0 or less checks game over
+
+    if((guessNum <= 0 ) && (currentWord.indexOf(guess) == -1)){ //if character does not exist in currentWord and guessNum is 0 or less checks game over
     gameOver(); 
     } 
     else {
@@ -70,6 +71,7 @@ function checkWord(guess){
     }  
     document.getElementById("word").innerHTML = makeString(wordHolder, " "); //Updates wins in HTML.
     console.log(wordHolder); //for me
+    
 }
 
 function gameOver() { //user lose as previous function criteria matched at function checkWord
